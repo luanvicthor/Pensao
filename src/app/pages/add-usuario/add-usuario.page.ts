@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from 'src/app/model/usuario';
 
 @Component({
   selector: 'app-add-usuario',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddUsuarioPage implements OnInit {
 
+  protected usuario: Usuario = new Usuario;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit(){
+    console.log(this.usuario); 
   }
 
 }
