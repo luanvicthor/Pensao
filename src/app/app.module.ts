@@ -12,14 +12,14 @@ import { AppComponent } from './app.component';
 //Firebase -------------------------
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
-import {AngularFireDatabaseModule} from "@angular/fire/database"
+import { AngularFireDatabaseModule } from "@angular/fire/database"
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-  AngularFireModule.initializeApp(environment.firebaseConfig),
-  AngularFireDatabaseModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
   ],
   providers: [
     StatusBar,
@@ -28,4 +28,4 @@ import {AngularFireDatabaseModule} from "@angular/fire/database"
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
