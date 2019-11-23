@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content>
+    <ion-item lines="none">
+        <img src="assets/perfil.png" (click)="escolherFoto()" *ngIf="!usuario.foto">
+        <img [src]="usuario.foto" (click)="escolherFoto()" *ngIf="usuario.foto">
+    </ion-item>
 
     <form #fc="ngForm" (ngSubmit)="onSubmit(fc)">
         <ion-item>
@@ -32,7 +36,6 @@
         <section>
             <ion-button type="submit" expand="full" [disabled]="fc.invalid || s.value != c.value">Salvar</ion-button>
             <ion-button type="reset" expand="full" color="danger">Cancelar</ion-button>
-            <ion-button expand="full" color="danger" (click)="perfil()">Perfil</ion-button>
         </section>
     </form>
 
