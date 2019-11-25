@@ -10,36 +10,38 @@ import { MensagemService } from 'src/app/services/mensagem.service';
 })
 export class LoginPage implements OnInit {
 
-  protected email:string = null;
-  protected pws:string = null;
+  protected email: string = null;
+  protected pws: string = null;
 
   constructor(
     private afAuth: AngularFireAuth,
-    private router:Router,
-    private msg:MensagemService
+    private router: Router,
+    private msg: MensagemService
   ) { }
 
   ngOnInit() {
   }
-  
-  onSubmit(fc){
+
+  onSubmit(fc) {
     this.login()
   }
 
-  login(){
+  login() {
     this.afAuth.auth.signInWithEmailAndPassword(this.email, this.pws).then(
-      res=>{
+      res => {
         this.router.navigate([''])
       },
-      err=>{
+      err => {
         console.log(err);
         this.msg.presentAlert("Ops!", "Não foi encotrado o usuario!");
       }
     )
   }
 
-  logout(){
-    this.afAuth.auth.signOut();
+  logout() {
+    this.afAuth.auth.signOut().then(
+      () => this.router.navigate([''])
+    )
   }
 
 }

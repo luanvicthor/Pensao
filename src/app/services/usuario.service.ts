@@ -38,7 +38,7 @@ export class UsuarioService {
 
   get() {
     let user = this.afAuth.auth.currentUser;
-    console.log(user);
+    //console.log(user);
     return this.firedb.object<Usuario>("usuarios/" + user.uid).valueChanges();
   }
 
@@ -56,7 +56,7 @@ export class UsuarioService {
     //return this.firedb.object("usuarios/" + uid).remove();
   }
 
-  logout(){
+  logout() {
     this.afAuth.auth.signOut();
   }
 }
