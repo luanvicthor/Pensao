@@ -38,6 +38,8 @@ export class LoginPage implements OnInit {
     )
   }
 
-
+  logout(){
+    this.afAuth.auth.signOut();
+  }
 
 }

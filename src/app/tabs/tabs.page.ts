@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(
+    protected usuarioService: UsuarioService
+  ) {
+    console.log(this.usuarioService.afAuth.auth.currentUser)
+    //console.log(this.usuarioService.afAuth.user)
+  }
 
 }

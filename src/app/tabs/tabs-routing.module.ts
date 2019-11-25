@@ -48,6 +48,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'perfilUsuario',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/pefil-usuario/pefil-usuario.module').then(m => m.PefilUsuarioPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
@@ -65,4 +75,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
