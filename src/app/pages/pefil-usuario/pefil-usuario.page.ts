@@ -25,11 +25,12 @@ export class PefilUsuarioPage implements OnInit {
       this.usuarioService.get().subscribe(
         res => {
           if (res == null) {
-            this.usuario = new Usuario;
+            this.usuario = new Usuario
           } else {
             this.usuario = res
-            this.usuario.email = login.email
+            
           }
+          this.usuario.email = login.email
           console.log(this.usuario)
         },
         erro => {

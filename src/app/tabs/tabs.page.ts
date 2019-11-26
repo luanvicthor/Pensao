@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuarioService } from '../services/usuario.service';
+import { Usuario } from '../model/usuario';
 
 @Component({
   selector: 'app-tabs',
@@ -8,11 +9,28 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class TabsPage {
 
+  protected usuario: Usuario = new Usuario
+
   constructor(
     protected usuarioService: UsuarioService
   ) {
-    console.log(this.usuarioService.afAuth.auth.currentUser)
-    //console.log(this.usuarioService.afAuth.user)
+  }
+
+  ionViewWillEnter() {
+    let login = this.usuarioService.afAuth.auth.currentUser;
+    console.log(login)
+    if (login) {
+      this.usuarioService.get().subscribe(
+        res => {
+          if (res == null) {
+            this.usuario = new Usuario
+          } else {
+            this.usuario = res
+          }
+          this.usuario.email = login.email
+        }
+      )
+    }
   }
 
 }

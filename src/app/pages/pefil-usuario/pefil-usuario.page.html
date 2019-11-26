@@ -7,6 +7,10 @@
 <ion-content>
     <ion-list lines="none">
         <ion-item>
+            <img src="assets/perfil.png" *ngIf="!usuario.foto">
+            <img [src]="usuario.foto" *ngIf="usuario.foto">
+        </ion-item>
+        <ion-item>
             <h2>{{usuario.nome}}</h2>
         </ion-item>
         <ion-item>
@@ -19,7 +23,6 @@
         <ion-item>
             <ion-button type="reset" expand="full" color="danger" (click)="sair()">Sair</ion-button>
         </ion-item>
-
     </ion-list>
 
 </ion-content>
