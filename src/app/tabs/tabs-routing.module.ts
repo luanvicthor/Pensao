@@ -38,6 +38,27 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'addUsuario',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/add-usuario/add-usuario.module').then(m => m.AddUsuarioPageModule)
+          }
+        ]
+      },
+      {
+        path: 'perfilUsuario',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/perfil-usuario/perfil-usuario.module').then(m => m.PerfilUsuarioPageModule)
+          }
+        ]
+      },
+      
+        {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
