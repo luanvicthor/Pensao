@@ -1,10 +1,20 @@
 <ion-header>
     <ion-toolbar>
       <ion-title slot="start">
-        Tab One
+        Ionic Model
       </ion-title>
       <ion-title slot="end">
-        <ion-icon name="person" routerLink="/login"></ion-icon>
+        <ion-icon name="person" routerLink="/login"*ngIf="!UsuarioService.afAuth.auth.currentUser"></ion-icon>
+
+       
+
+          <ion-chip  *ngIf="UsuarioService.afAuth.auth.currentUser" routerLink="/tabs/perfilUsuario">
+            <ion-avatar>
+              <img src="assets/perfil.png " *ngIf="!usuario.foto">
+              <img [src]="usuario.foto " *ngIf="usuario.foto">
+            </ion-avatar>
+            <ion-label>{{usuario.nome}}</ion-label>
+          </ion-chip>
       </ion-title>
     </ion-toolbar>
   </ion-header>

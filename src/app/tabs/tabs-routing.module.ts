@@ -48,6 +48,17 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'perfilUsuario',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/perfil-usuario/perfil-usuario.module').then(m => m.PerfilUsuarioPageModule)
+          }
+        ]
+      },
+      
+        {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

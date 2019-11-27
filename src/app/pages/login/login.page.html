@@ -27,12 +27,15 @@
               
           </section>
   </form> 
-  <section>
-
-      <ion-button  expand="full" [disabled]="fc.invalid " color="success" routerLink="/tabs/addUsuario">Novo Cadastro</ion-button>
-
-      <ion-button  expand="full" color="" >Entrar pelo Google</ion-button>
-      
-  </section>
-
 </ion-content>
+
+    <ion-content class="ion-padding">
+    <section>
+
+        <ion-button  expand="full"  color="warning" routerLink="/tabs/addUsuario">Novo Cadastro</ion-button>
+
+        <ion-button  expand="block" fill="outline" (click)="loginGoogle()">Entrar pelo Google</ion-button>
+        
+    </section>
+  </ion-content>
+

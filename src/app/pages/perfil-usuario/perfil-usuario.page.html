@@ -1,9 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>perfil-usuario</ion-title>
+    <ion-title>Perfil Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list lines="none">
+      <ion-item>
+          <img src="assets/perfil.png " *ngIf="!usuario.foto">
+            <img [src]="usuario.foto " *ngIf="usuario.foto">
+      </ion-item>
 
+    <ion-item>
+      <h2>{{usuario.nome}}</h2>
+    </ion-item>
+    
+      <ion-item>
+          <p>E-mail:{{usuario.email}}</p>
+        </ion-item>
+        <ion-item>
+            <p>Ativo:{{usuario.ativo}}</p>
+          </ion-item>
+      <ion-item>
+          <ion-button type="reset" expand="full" color="danger"(click)="sair()">Sair</ion-button>
+        </ion-item>
+  </ion-list>
+  
+  
+  
 </ion-content>
