@@ -10,6 +10,7 @@
             <img src="assets/perfil.png" *ngIf="!usuario.foto">
             <img [src]="usuario.foto" *ngIf="usuario.foto">
         </ion-item>
+        
         <ion-item>
             <h2>{{usuario.nome}}</h2>
         </ion-item>

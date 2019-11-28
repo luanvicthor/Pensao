@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/services/mensagem.service';
+import { auth } from 'firebase';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +19,9 @@ export class LoginPage implements OnInit {
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private msg: MensagemService
+    private msg: MensagemService,
+    private googlePlus: GooglePlus,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
@@ -36,6 +41,19 @@ export class LoginPage implements OnInit {
         this.msg.presentAlert("Ops!", "Não foi encotrado o usuario!");
       }
     )
+  }
+
+  loginGoogle() {
+    if (!this.platform.is("cordova")) {
+      this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    } else {
+      this.googlePlus.login({})
+        .then(res =>{
+          console.log(res)          
+          this.router.navigate([''])
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   logout() {
