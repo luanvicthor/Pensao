@@ -27,6 +27,10 @@ export class PerfilUsuarioPage implements OnInit {
       res => {
         if (res == null){
           this.usuario = new Usuario
+          if(login.displayName != null){
+            this.usuario.foto = login.photoURL
+            this.usuario.nome = login.displayName
+          }
         } else{
           this.usuario = res
         }

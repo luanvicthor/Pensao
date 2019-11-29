@@ -36,12 +36,15 @@ export class LoginPage implements OnInit {
   }
 
   login(){
+    this.msg.presentLoading()
     this.afAuth.auth.signInWithEmailAndPassword(this.email, this.pws).then(
       res=>{
+        this.msg.dismissLoading()
         this.router.navigate([''])
       },
       err=>{
         console.log(err);
+        this.msg.dismissLoading()
         this.msg.presentAlert("Ops", "Não foi encontrado o usuario");
       }
       )
