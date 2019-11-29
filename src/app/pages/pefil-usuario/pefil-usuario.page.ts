@@ -20,7 +20,7 @@ export class PefilUsuarioPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   ionViewWillEnter() {
@@ -36,7 +36,6 @@ export class PefilUsuarioPage implements OnInit {
             }
           } else {
             this.usuario = res
-
           }
           this.usuario.email = login.email
           this.localAtual();
@@ -54,13 +53,13 @@ export class PefilUsuarioPage implements OnInit {
     this.usuarioService.logout()
     this.router.navigate(["/"])
   }
-  
-  localAtual(){
+
+  localAtual() {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.usuario.lat = resp.coords.latitude
       this.usuario.lng = resp.coords.longitude
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 }

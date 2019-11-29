@@ -10,7 +10,7 @@
             <img src="assets/perfil.png" *ngIf="!usuario.foto">
             <img [src]="usuario.foto" *ngIf="usuario.foto">
         </ion-item>
-        
+
         <ion-item>
             <h2>{{usuario.nome}}</h2>
         </ion-item>
@@ -21,8 +21,10 @@
             <p>Ativo:{{usuario.ativo}}</p>
         </ion-item>
         <ion-item>
-            <p>Latitude: {{usuario.lat}}</p>
-            <p>Longitude: {{usuario.lng}}</p>
+            <ion-text>
+                <p>Latitude: {{usuario.lat}}</p>
+                <p>Longitude: {{usuario.lng}}</p>
+            </ion-text>
         </ion-item>
 
         <ion-item>
