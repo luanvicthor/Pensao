@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/services/mensagem.service';
-import { auth } from 'firebase';
+import { auth } from 'firebase/app';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Platform } from '@ionic/angular';
 
@@ -45,14 +45,19 @@ export class LoginPage implements OnInit {
 
   loginGoogle() {
     if (!this.platform.is("cordova")) {
-      this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    } else {
-      this.googlePlus.login({})
-        .then(res =>{
-          console.log(res)          
+      this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+        .then(res => {
+          console.log(res)
           this.router.navigate([''])
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+    } else {
+      this.googlePlus.login({})
+        .then(res => {
+          console.log(res)
+          this.router.navigate([''])
+        })
+        .catch(err => console.error(err))
     }
   }
 

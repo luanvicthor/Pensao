@@ -24,6 +24,10 @@ export class TabsPage {
         res => {
           if (res == null) {
             this.usuario = new Usuario
+            if (login.displayName != null) {
+              this.usuario.foto = login.photoURL
+              this.usuario.nome = login.displayName
+            }
           } else {
             this.usuario = res
           }
