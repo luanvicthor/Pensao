@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/model/usuario';
 import { Router } from '@angular/router';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-pefil-usuario',
@@ -14,10 +15,13 @@ export class PefilUsuarioPage implements OnInit {
 
   constructor(
     protected usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private geolocation: Geolocation
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    
+  }
 
   ionViewWillEnter() {
     let login = this.usuarioService.afAuth.auth.currentUser;
@@ -35,6 +39,7 @@ export class PefilUsuarioPage implements OnInit {
 
           }
           this.usuario.email = login.email
+          this.localAtual();
           console.log(this.usuario)
         },
         erro => {
@@ -48,5 +53,14 @@ export class PefilUsuarioPage implements OnInit {
   sair() {
     this.usuarioService.logout()
     this.router.navigate(["/"])
+  }
+  
+  localAtual(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.usuario.lat = resp.coords.latitude
+      this.usuario.lng = resp.coords.longitude
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 }

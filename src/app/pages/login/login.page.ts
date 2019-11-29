@@ -5,6 +5,7 @@ import { MensagemService } from 'src/app/services/mensagem.service';
 import { auth } from 'firebase/app';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Platform } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,12 @@ export class LoginPage implements OnInit {
     private router: Router,
     private msg: MensagemService,
     private googlePlus: GooglePlus,
-    private platform: Platform
+    private platform: Platform,
+    private geolocation: Geolocation
   ) { }
 
   ngOnInit() {
+    this.localAtual()
   }
 
   onSubmit(fc) {
@@ -32,12 +35,15 @@ export class LoginPage implements OnInit {
   }
 
   login() {
+    this.msg.presentLoading()
     this.afAuth.auth.signInWithEmailAndPassword(this.email, this.pws).then(
       res => {
+        this.msg.dismissLoading()
         this.router.navigate([''])
       },
       err => {
         console.log(err);
+        this.msg.dismissLoading()
         this.msg.presentAlert("Ops!", "Não foi encotrado o usuario!");
       }
     )
@@ -65,6 +71,15 @@ export class LoginPage implements OnInit {
     this.afAuth.auth.signOut().then(
       () => this.router.navigate([''])
     )
+  }
+
+  localAtual(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log("latitude: ", resp.coords.latitude)
+      console.log("longitude: ", resp.coords.longitude)
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
 }

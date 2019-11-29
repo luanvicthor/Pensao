@@ -28,9 +28,11 @@ export class AddUsuarioPage implements OnInit {
 
   onSubmit(form) {
     //console.log(this.usuario);
+    this.msg.presentLoading()
     this.usuarioService.add(this.usuario).then(
       res => {
         //console.log("Cadastrado! ", res);
+        this.msg.dismissLoading()
         this.msg.presentAlert("OK, ok!", "Cadastrado com sucesso!");
         this.usuario = new Usuario;
         form.reset();
@@ -38,6 +40,7 @@ export class AddUsuarioPage implements OnInit {
       },
       erro => {
         console.log("Erro: ", erro);
+        this.msg.dismissLoading()
         this.msg.presentAlert("Ops!", "Erro ao tentar cadastrar!\nVerique os dados ou se o e-mail já foi cadastrado!");
       }
     )

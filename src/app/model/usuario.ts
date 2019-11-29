@@ -6,5 +6,7 @@ export class Usuario {
     pws:string;
     foto:string;
     ativo:boolean = true;
-    enderecos:Endereco[] = []
+    enderecos:Endereco[] = [];
+    lat:number;
+    lng:number;
 }
