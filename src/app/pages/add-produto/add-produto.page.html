@@ -1,9 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>add-produto</ion-title>
+    <ion-title>Dados do Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item lines="none">
+    <img src="assets/box.png" (click)="escolherFoto()" *ngIf="!produto.fotos[]">
+    <img [src]="produto.fotos[0]" (click)="escolherFoto()" *ngIf="produto.fotos[]">
+  </ion-item>
+
+  <form #fc="ngForm" (ngSubmit)="onSubmit(fc)">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input type="text" name="nome" [(ngModel)]="produto.nome" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-input type="text" name="descricao" [(ngModel)]="produto.descricao" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categoria</ion-label>
+      <ion-select placeholder="Selecione a Categoria" name="categoria" [(ngModel)]="produto.categoria">
+        <ion-select-option value="comum">comum</ion-select-option>
+        <ion-select-option value="especial">especial</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Valor</ion-label>
+      <ion-input type="number" name="valor" [(ngModel)]="produto.valor" required></ion-input>
+    </ion-item>
+
+    <section>
+      <ion-button type="submit" expand="full" [disabled]="fc.invalid">Salvar</ion-button>
+      <ion-button type="reset" expand="full" color="danger">Cancelar</ion-button>
+    </section>
+  </form>
 
 </ion-content>
