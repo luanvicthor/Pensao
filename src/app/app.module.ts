@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Camera } from '@ionic-native/camera/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 
 //Firebase ----------------------------------------------------------------------------------------------------
@@ -29,7 +31,8 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },Camera,GooglePlus
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },Camera,GooglePlus,Geolocation,
+    AndroidPermissions
   ],
   bootstrap: [AppComponent]
 })

@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 
 @Component({
@@ -14,58 +15,75 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 })
 export class LoginPage implements OnInit {
 
-  protected email:string = null
-    protected pws:string = null
+  protected email: string = null
+  protected pws: string = null
 
 
   constructor(
     private afAuth: AngularFireAuth,
-    private router:Router,
-    private msg:MensagemService,
+    private router: Router,
+    private msg: MensagemService,
     private googlePlus: GooglePlus,
-    private platform: Platform
-    
+    private platform: Platform,
+    private geolocation: Geolocation
+
   ) { }
 
   ngOnInit() {
+    this.localAtual
   }
 
-  onSubmit(fc){
+  onSubmit(fc) {
     this.login()
 
   }
 
-  login(){
+  login() {
     this.msg.presentLoading()
     this.afAuth.auth.signInWithEmailAndPassword(this.email, this.pws).then(
-      res=>{
+      res => {
         this.msg.dismissLoading()
         this.router.navigate([''])
       },
-      err=>{
+      err => {
         console.log(err);
         this.msg.dismissLoading()
         this.msg.presentAlert("Ops", "Não foi encontrado o usuario");
       }
-      )
+    )
   }
-  loginGoogle(){
-    if (!this.platform.is("cordova")){
-      this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    }else{
+  loginGoogle() {
+    if (!this.platform.is("cordova")) {
+      this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+      .then(res => {
+        console.log(res)
+        this.router.navigate([''])
+        })
+        .catch(err => console.error(err));
+    } else {
       this.googlePlus.login({})
-        .then(res =>{
-          console.log(res)
-          this.router.navigate([''])
+      this.googlePlus.login({})
+      .then(res => {
+        console.log(res)
+        this.router.navigate([''])
         })
         .catch(err => console.error(err));
     }
-    
-    
+
+
   }
-  logout(){
+  logout() {
     this.afAuth.auth.signOut().then(
       () => this.router.navigate([''])
     )
+  }
+  localAtual() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log("latitude:", resp.coords.latitude)
+      console.log("longitude:", resp.coords.longitude)
+
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 }
