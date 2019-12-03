@@ -6,8 +6,8 @@
 
 <ion-content>
   <ion-item lines="none">
-    <img src="assets/box.png" (click)="escolherFoto()" *ngIf="!produto.fotos[]">
-    <img [src]="produto.fotos[0]" (click)="escolherFoto()" *ngIf="produto.fotos[]">
+    <img src="assets/box.png" (click)="escolherFoto()" *ngIf="!produto.fotos">
+    <img [src]="produto.fotos[0]" (click)="escolherFoto()" *ngIf="produto.fotos">
   </ion-item>
 
   <form #fc="ngForm" (ngSubmit)="onSubmit(fc)">
@@ -30,6 +30,10 @@
     </ion-item>
 
     <ion-item>
+      <ion-label position="floating">Quantidade</ion-label>
+      <ion-input type="number" name="quant" [(ngModel)]="produto.quant" required></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label position="floating">Valor</ion-label>
       <ion-input type="number" name="valor" [(ngModel)]="produto.valor" required></ion-input>
     </ion-item>
@@ -39,5 +43,7 @@
       <ion-button type="reset" expand="full" color="danger">Cancelar</ion-button>
     </section>
   </form>
+
+  <div id="map_canvas"></div>
 
 </ion-content>

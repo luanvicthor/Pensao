@@ -5,6 +5,18 @@ import { Produto } from 'src/app/model/produto';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker,
+  Environment
+} from '@ionic-native/google-maps';
 
 @Component({
   selector: 'app-add-produto',
@@ -20,14 +32,17 @@ export class AddProdutoPage implements OnInit {
     private msg: MensagemService,
     private router: Router,
     private camera: Camera,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    private geolocation: Geolocation,
   ) { }
 
   ngOnInit() {
+   this.loadMap()
   }
 
   onSubmit(form) {
     //console.log(this.produto);
+    this.localAtual()
     this.msg.presentLoading()
     this.produtoService.add(this.produto).then(
       res => {
@@ -120,4 +135,42 @@ export class AddProdutoPage implements OnInit {
     await actionSheet.present();
   }
 
+  localAtual() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.produto.lat = resp.coords.latitude;
+      this.produto.lng = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
+
+  map: GoogleMap;
+
+  loadMap() {
+    let mapOptions: GoogleMapOptions = {
+      camera: {
+         target: {
+           lat: 43.0741904,
+           lng: -89.3809802
+         },
+         zoom: 18,
+         tilt: 30
+       }
+    };
+
+    this.map = GoogleMaps.create('map_canvas', mapOptions);
+
+    let marker: Marker = this.map.addMarkerSync({
+      title: 'Ionic',
+      icon: 'blue',
+      animation: 'DROP',
+      position: {
+        lat: 43.0741904,
+        lng: -89.3809802
+      }
+    });
+    marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+      alert('clicked');
+    });
+  }
 }
