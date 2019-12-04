@@ -18,12 +18,12 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
+        path: 'googlemaps',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../googlemaps/googlemaps.module').then(m => m.GooglemapsPageModule)
           }
         ]
       },
@@ -54,6 +54,16 @@ const routes: Routes = [
             path: '',
             loadChildren: () =>
               import('../pages/perfil-usuario/perfil-usuario.module').then(m => m.PerfilUsuarioPageModule)
+          }
+        ]
+      },
+      {
+        path: 'addProduto',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/add-produto/add-produto.module').then(m => m.AddProdutoPageModule)
           }
         ]
       },
