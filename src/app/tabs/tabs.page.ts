@@ -12,28 +12,32 @@ export class TabsPage {
   protected usuario: Usuario = new Usuario
 
   constructor(
-    protected UsuarioService:UsuarioService
+    protected UsuarioService: UsuarioService
   ) {
     console.log(this.UsuarioService.afAuth.auth.currentUser)
     //console.log(this.UsuarioService.afAuth.user)
   }
-  ionViewWillEnter(){
-    let login =this.UsuarioService.afAuth.auth.currentUser
-    if(login){
+  ionViewWillEnter() {
+    let login = this.UsuarioService.afAuth.auth.currentUser
+    if (login) {
       this.UsuarioService.get().subscribe(
-       res => {
-         if (res == null){
-           this.usuario = new Usuario
-         } else{
-           this.usuario = res
-         }
-         this.usuario.email = login.email
-         
-       },
-       
+        res => {
+          if (res == null) {
+            this.usuario = new Usuario
+            if(login.displayName != null){
+              this.usuario.foto = login.photoURL
+              this.usuario.nome = login.displayName
+            }
+          } else {
+            this.usuario = res
+          }
+          this.usuario.email = login.email
+
+        },
+
       )
-     
-   }
- }
+
+    }
+  }
 
 }

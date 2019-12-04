@@ -1,6 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 
 import { MensagemService } from './mensagem.service';
+import { LoadingController } from '@ionic/angular'
+import { dismiss } from '@ionic/core/dist/types/utils/overlays';
 
 describe('MensagemService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -10,3 +12,4 @@ describe('MensagemService', () => {
     expect(service).toBeTruthy();
   });
 });
+

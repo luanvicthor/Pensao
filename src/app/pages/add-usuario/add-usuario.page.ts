@@ -13,8 +13,8 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./add-usuario.page.scss'],
 })
 export class AddUsuarioPage implements OnInit {
-  
-  protected usuario :Usuario = new Usuario;
+
+  protected usuario: Usuario = new Usuario;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -29,55 +29,58 @@ export class AddUsuarioPage implements OnInit {
 
   onSubmit(form) {
     //console.log(this.usuario);
+    this.msg.presentLoading()
     this.usuarioService.add(this.usuario).then(
-      res=>{
+      res => {
         //console.log("Cadastrado!", res);
+        this.msg.dismissLoading()
         this.msg.presentAlert("OK, ok", "Cadastrado com sucesso!");
         this.usuario = new Usuario;
         form.reset();
         this.router.navigate(['']);
       },
-      erro=>{
+      erro => {
         console.log("Erro:", erro);
-        this.msg.presentAlert("Ops!","Erro ao tentar cadastrar!\nVerifique os dados e se o email já foi cadastrado!")
+        this.msg.dismissLoading()
+        this.msg.presentAlert("Ops!", "Erro ao tentar cadastrar!\nVerifique os dados e se o email já foi cadastrado!")
       }
     )
   }
-  tirarFoto(){
+  tirarFoto() {
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-    
+
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.usuario.foto = base64Image;
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.usuario.foto = base64Image;
     }, (err) => {
-     // Handle error
+      // Handle error
     });
   }
 
-  pegarFoto(){
+  pegarFoto() {
     const options: CameraOptions = {
       quality: 50,
-      sourceType:this.camera.PictureSourceType.PHOTOLIBRARY,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-    
+
 
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.usuario.foto = base64Image;
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.usuario.foto = base64Image;
     }, (err) => {
-     // Handle error
+      // Handle error
     });
   }
   async escolherFoto() {
@@ -89,15 +92,15 @@ export class AddUsuarioPage implements OnInit {
         handler: () => {
           this.tirarFoto()
         }
-      
-      }, 
+
+      },
       {
         text: 'Galeria',
         icon: 'photos',
         handler: () => {
           this.pegarFoto()
         }
-      
+
       },
       {
         text: 'Remover Foto',
@@ -105,7 +108,7 @@ export class AddUsuarioPage implements OnInit {
         handler: () => {
           this.usuario.foto = null;
         }
-      
+
       },
       {
         text: 'Cancelar',
