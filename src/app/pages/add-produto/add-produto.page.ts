@@ -4,8 +4,9 @@ import { MensagemService } from 'src/app/services/mensagem.service';
 import { Produto } from 'src/app/model/produto';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 import {
   GoogleMaps,
@@ -15,7 +16,8 @@ import {
   CameraPosition,
   MarkerOptions,
   Marker,
-  Environment
+  MyLocation,
+  LocationService
 } from '@ionic-native/google-maps';
 
 @Component({
@@ -34,15 +36,17 @@ export class AddProdutoPage implements OnInit {
     private camera: Camera,
     public actionSheetController: ActionSheetController,
     private geolocation: Geolocation,
+    private platform: Platform
   ) { }
 
   ngOnInit() {
-   this.loadMap()
+    this.platform.ready().then(() => {
+      this.loadMap();
+    });
   }
 
   onSubmit(form) {
     //console.log(this.produto);
-    this.localAtual()
     this.msg.presentLoading()
     this.produtoService.add(this.produto).then(
       res => {
@@ -135,42 +139,56 @@ export class AddProdutoPage implements OnInit {
     await actionSheet.present();
   }
 
-  localAtual() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      this.produto.lat = resp.coords.latitude;
-      this.produto.lng = resp.coords.longitude;
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
-  }
 
+  //Google Maps ------------------------------------------
   map: GoogleMap;
+  local = { lat: 43.0741904, lng: -89.3809802 };
 
   loadMap() {
+   
     let mapOptions: GoogleMapOptions = {
       camera: {
-         target: {
-           lat: 43.0741904,
-           lng: -89.3809802
-         },
-         zoom: 18,
-         tilt: 30
-       }
-    };
+        target: {
+          lat: this.local.lat,
+          lng: this.local.lng
+        },
+        zoom: 18,
+        tilt: 30
+      }
+    }
+
+    this.minhaLocalizacao()
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
 
+    this.adicionarPonto("blue", "VOCÊ");
+    
+    this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(
+      () => this.adicionarPonto("#778800", "Produto")
+    )
+  }
+
+  minhaLocalizacao() {
+    LocationService.getMyLocation().then(
+      (myLocation: MyLocation) => {
+        this.local = myLocation.latLng
+        this.map.setOptions({
+          camera: {
+            target: myLocation.latLng
+          }
+        })
+      })
+  }
+
+  adicionarPonto(cor: string, nome: string) {
     let marker: Marker = this.map.addMarkerSync({
-      title: 'Ionic',
-      icon: 'blue',
+      title: nome,
+      icon: cor,
       animation: 'DROP',
-      position: {
-        lat: 43.0741904,
-        lng: -89.3809802
-      }
+      position: this.local
     });
     marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-      alert('clicked');
+      alert(nome);
     });
   }
 }

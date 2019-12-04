@@ -6,6 +6,6 @@ export class Produto {
     quant:number;
     fotos:string[] = [];
     ativo:boolean = true;
-    lat:number;
-    lng:number;
+    lat:number = 0;
+    lng:number = 0;
 }

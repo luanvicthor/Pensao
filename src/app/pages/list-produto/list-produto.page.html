@@ -1,9 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>list-produto</ion-title>
+    <ion-title>Lista de Produtos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-item>
+    <ion-label>Lista</ion-label>
+    <ion-toggle (ngModel)="lista" (click)="lista = !lista"></ion-toggle>
+  </ion-item>
+
+  <ion-list *ngIf="!lista">
+    <ion-card class="" *ngFor="let p of produtos">
+      <img src="" alt="" />
+      <ion-card-header>
+        <ion-card-subtitle>{{p.nome}}</ion-card-subtitle>
+        <ion-card-title>{{ p.valor | currency:'BRL' }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ p.decricao }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-list class="" *ngIf="lista">
+    <ion-item-sliding *ngFor="let p of produtos">
+      <ion-item-options side="start">
+        <ion-item-option>Favorito</ion-item-option>
+      </ion-item-options>
+
+      <ion-item>
+        <ion-label>{{ p.nome }}</ion-label>
+        <ion-text>{{ p.key }}</ion-text>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option>Comprar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

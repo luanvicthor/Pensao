@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Produto } from '../model/produto';
-import { AngularFirestore } from "@angular/fire/firestore"
+import { AngularFirestore } from "@angular/fire/firestore";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,15 @@ export class ProdutoService {
     return this.firedb.collection<Produto>("produtos").doc(id).get();
   }
 
+  gelAll() {
+    return this.firedb.collection<Produto>("produtos").snapshotChanges()
+      .pipe(
+        map(dados =>
+          dados.map(d => ({ key: d.payload.doc.id, ...d.payload.doc.data() }))
+          //dados.map(d => ({ key: d.payload.key, ...d.payload.val() }))
+        )
+      )
+  }
   update(produto: Produto, id: any) {
     return this.firedb.collection("produtos").doc(id).update(produto);
   }
