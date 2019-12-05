@@ -43,6 +43,7 @@ export class AddProdutoPage implements OnInit {
     this.platform.ready().then(() => {
       this.loadMap();
     });
+    this.produto.fotos = null
   }
 
   onSubmit(form) {
@@ -96,6 +97,9 @@ export class AddProdutoPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
+      if (this.produto.fotos == null) {
+        this.produto.fotos = []
+      }
       this.produto.fotos.push(base64Image);
     }, (err) => {
       // Handle error
@@ -145,7 +149,6 @@ export class AddProdutoPage implements OnInit {
   local = { lat: 43.0741904, lng: -89.3809802 };
 
   loadMap() {
-
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
@@ -175,6 +178,7 @@ export class AddProdutoPage implements OnInit {
     LocationService.getMyLocation().then(
       (myLocation: MyLocation) => {
         this.local = myLocation.latLng
+        console.log(this.local);
         this.map.setOptions({
           camera: {
             target: myLocation.latLng

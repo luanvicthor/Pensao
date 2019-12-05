@@ -4,7 +4,7 @@ export class Produto {
     categoria:string;
     valor:number;
     quant:number;
-    fotos:string[] = [];
+    fotos:string[];
     ativo:boolean = true;
     lat:number = 0;
     lng:number = 0;
