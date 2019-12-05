@@ -145,7 +145,7 @@ export class AddProdutoPage implements OnInit {
   local = { lat: 43.0741904, lng: -89.3809802 };
 
   loadMap() {
-   
+
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
@@ -157,14 +157,17 @@ export class AddProdutoPage implements OnInit {
       }
     }
 
-    this.minhaLocalizacao()
-
     this.map = GoogleMaps.create('map_canvas', mapOptions);
 
-    this.adicionarPonto("blue", "VOCÊ");
-    
+    this.minhaLocalizacao()
+
+    this.adicionarPonto("blue", "VOCÊ", this.local);
+
     this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(
-      () => this.adicionarPonto("#778800", "Produto")
+      p => {
+        this.adicionarPonto("red", "Produto", p[0])
+        console.log(p[0]);
+      }
     )
   }
 
@@ -180,12 +183,12 @@ export class AddProdutoPage implements OnInit {
       })
   }
 
-  adicionarPonto(cor: string, nome: string) {
+  adicionarPonto(cor: string, nome: string, local: any) {
     let marker: Marker = this.map.addMarkerSync({
       title: nome,
       icon: cor,
       animation: 'DROP',
-      position: this.local
+      position: local
     });
     marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
       alert(nome);

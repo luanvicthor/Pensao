@@ -27,7 +27,7 @@
   <ion-list class="" *ngIf="lista">
     <ion-item-sliding *ngFor="let p of produtos">
       <ion-item-options side="start">
-        <ion-item-option>Favorito</ion-item-option>
+        <ion-item-option (click)="atualizar(p.key)" color="primary">Atualizar</ion-item-option>
       </ion-item-options>
 
       <ion-item>
@@ -36,7 +36,7 @@
       </ion-item>
 
       <ion-item-options side="end">
-        <ion-item-option>Comprar</ion-item-option>
+        <ion-item-option (click)="remover(p.key)" color="danger">Remover</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
