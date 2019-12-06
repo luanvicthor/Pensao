@@ -20,6 +20,7 @@ import {
   LocationService
 } from '@ionic-native/google-maps';
 
+
 @Component({
   selector: 'app-add-produto',
   templateUrl: './add-produto.page.html',
@@ -28,7 +29,11 @@ import {
 export class AddProdutoPage implements OnInit {
 
   protected produto: Produto = new Produto;
-
+  slideOpts = {
+    initialSlide: 1,
+    slidesPerView: 4,
+    speed: 400
+  };
   constructor(
     private produtoService: ProdutoService,
     private msg: MensagemService,
@@ -66,6 +71,7 @@ export class AddProdutoPage implements OnInit {
     )
   }
 
+  //Fotos ------------------------------------------  
   tirarFoto() {
     const options: CameraOptions = {
       quality: 50,
@@ -78,6 +84,9 @@ export class AddProdutoPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
+      if (this.produto.fotos == null) {
+        this.produto.fotos = []
+      }
       this.produto.fotos.push(base64Image);
     }, (err) => {
       // Handle error
@@ -143,6 +152,28 @@ export class AddProdutoPage implements OnInit {
     await actionSheet.present();
   }
 
+  async removerFoto(index) {
+    const alert = await this.msg.alertController.create({
+      header: 'Confirmar!',
+      message: 'Deseja apagar a ' + (index + 1) + 'ª foto?',
+      buttons: [
+        {
+          text: 'Sim',
+          handler: () => {
+            this.produto.fotos.splice(index, 1)
+            if (this.produto.fotos[0] == null)
+              this.produto.fotos = null
+          }
+        }
+        ,
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }]
+    });
+    await alert.present();
+  }
 
   //Google Maps ------------------------------------------
   map: GoogleMap;

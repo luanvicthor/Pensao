@@ -8,7 +8,7 @@ import { LoadingController } from '@ionic/angular';
 export class MensagemService {
 
   constructor(
-    private alertController: AlertController,
+    public alertController: AlertController,
     public loadingController: LoadingController
   ) { }
 

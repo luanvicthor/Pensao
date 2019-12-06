@@ -5,10 +5,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-item lines="none">
+  <ion-item lines="none" class="foto">
     <img src="assets/box.png" (click)="escolherFoto()" *ngIf="!produto.fotos">
     <img [src]="produto.fotos[0]" (click)="escolherFoto()" *ngIf="produto.fotos">
   </ion-item>
+  
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="produto.fotos">
+    <ion-slide *ngFor="let foto of produto.fotos; let i=index" class="fotos">
+      <img src="{{foto}}" (click)="removerFoto(i)">
+    </ion-slide>
+  </ion-slides>
 
   <form #fc="ngForm" (ngSubmit)="onSubmit(fc)">
     <ion-item>
