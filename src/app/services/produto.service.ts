@@ -13,7 +13,7 @@ export class ProdutoService {
   ) { }
 
   add(produto: Produto) {
-    return this.firedb.collection("produtos").add(
+    return this.firedb.collection<Produto>("produtos").add(
       {
         nome: produto.nome,
         descricao: produto.descricao,
@@ -28,7 +28,7 @@ export class ProdutoService {
   }
 
   get(id) {
-    return this.firedb.collection<Produto>("produtos").doc(id).get();
+    return this.firedb.collection("produtos").doc<Produto>(id).valueChanges();
   }
 
   gelAll() {
@@ -40,12 +40,13 @@ export class ProdutoService {
         )
       )
   }
+
   update(produto: Produto, id: any) {
-    return this.firedb.collection("produtos").doc(id).update(produto);
+    return this.firedb.collection("produtos").doc<Produto>(id).update(produto);
   }
 
   delete(id: any) {
-    return this.firedb.collection("produtos").doc(id).update({
+    return this.firedb.collection("produtos").doc<Produto>(id).update({
       ativo: false
     });
     //return this.firedb.collection("produtos").doc(id).remove();

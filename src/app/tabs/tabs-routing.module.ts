@@ -28,6 +28,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'perfilProduto/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/pefil-produto/pefil-produto.module').then(m => m.PefilProdutoPageModule)
+          }
+        ]
+      },
+      {
         path: 'tab3',
         children: [
           {

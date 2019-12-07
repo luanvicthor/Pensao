@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>pefil-produto</ion-title>
+    <ion-title>Perfil Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list lines="none">
+    <ion-item lines="none" class="foto">
+      <img src="assets/box.png" *ngIf="!produto.fotos">
+      <img [src]="produto.fotos[0]" *ngIf="produto.fotos">
+    </ion-item>
+    
+    <ion-slides pager="true" [options]="slideOpts" *ngIf="produto.fotos">
+      <ion-slide *ngFor="let foto of produto.fotos" class="fotos">
+        <img src="{{foto}}">
+      </ion-slide>
+    </ion-slides>
+
+    <ion-item>
+      <h2>{{produto.nome}}</h2>
+    </ion-item>
+    <ion-item>
+      <p>Descrição:{{produto.descricao}}</p>
+    </ion-item>
+    <ion-item>
+      <p>Ativo:{{produto.ativo}}</p>
+    </ion-item>
+    <ion-item>
+      <ion-text>
+        <p>Latitude: {{produto.lat}}</p>
+        <p>Longitude: {{produto.lng}}</p>
+      </ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-button type="reset" expand="full" color="danger" (click)="comprar()">Comprar</ion-button>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

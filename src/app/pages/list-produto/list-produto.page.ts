@@ -9,7 +9,7 @@ import { Produto } from 'src/app/model/produto';
 })
 export class ListProdutoPage implements OnInit {
 
-  protected produtos: Produto[] = []
+  protected produtos: Produto[];
   protected lista: boolean = false
 
   constructor(
@@ -20,7 +20,7 @@ export class ListProdutoPage implements OnInit {
     this.produtoService.gelAll().subscribe(
       res => {
         this.produtos = res;
-        //console.log(res);
+        console.log(res);
       }
     )
   }

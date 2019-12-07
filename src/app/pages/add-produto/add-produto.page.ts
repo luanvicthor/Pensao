@@ -29,11 +29,13 @@ import {
 export class AddProdutoPage implements OnInit {
 
   protected produto: Produto = new Produto;
+
   slideOpts = {
     initialSlide: 1,
     slidesPerView: 4,
     speed: 400
-  };
+  }
+  
   constructor(
     private produtoService: ProdutoService,
     private msg: MensagemService,
@@ -164,15 +166,15 @@ export class AddProdutoPage implements OnInit {
             if (this.produto.fotos[0] == null)
               this.produto.fotos = null
           }
-        }
-        ,
+        },
         {
           text: 'Não',
           role: 'cancel',
           cssClass: 'secondary',
-        }]
-    });
-    await alert.present();
+        }
+      ]
+    })
+    await alert.present()
   }
 
   //Google Maps ------------------------------------------

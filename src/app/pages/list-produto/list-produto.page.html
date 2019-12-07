@@ -12,17 +12,20 @@
   </ion-item>
 
   <ion-list *ngIf="!lista">
-    <ion-card class="cards" *ngFor="let p of produtos">
-      <img src="{{p.fotos[0]}}" alt="" *ngIf="p.fotos[0]!=null" />
-      <img src="assets/box.png" alt="" *ngIf="p.fotos[0]==null" />
-      <ion-card-header>
-        <ion-card-subtitle>{{p.nome}}</ion-card-subtitle>
-        <ion-card-title>{{ p.valor | currency:'BRL' }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>{{ p.decricao }}</p>
-      </ion-card-content>
-    </ion-card>
+    <div *ngFor="let p of produtos">
+      <ion-card class="cards" routerLink="/tabs/perfilProduto/{{p.key}}">
+       <img src="{{p.fotos[0]}}" alt="" *ngIf="p.fotos" />
+        <img src="assets/box.png" alt="" *ngIf="!p.fotos" />
+        
+        <ion-card-header>
+          <ion-card-subtitle>{{p.nome}}</ion-card-subtitle>
+          <ion-card-title>{{ p.valor | currency:'BRL' }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>{{ p.decricao }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </ion-list>
 
   <ion-list class="lista" *ngIf="lista">
@@ -31,10 +34,10 @@
         <ion-item-option (click)="atualizar(p.key)" color="primary">Atualizar</ion-item-option>
       </ion-item-options>
 
-      <ion-item>
+      <ion-item routerLink="/tabs/perfilProduto/{{p.key}}">
         <ion-avatar>
-          <img src="{{p.fotos[0]}}" alt="" *ngIf="p.fotos[0]!=null" />
-          <img src="assets/box.png" alt="" *ngIf="p.fotos[0]==null" />
+          <img src="{{p.fotos[0]}}" alt="" *ngIf="p.fotos" />
+          <img src="assets/box.png" alt="" *ngIf="!p.fotos" />
         </ion-avatar>
         <ion-label>{{ p.nome }}</ion-label>
         <ion-text>{{ p.key }}</ion-text>
