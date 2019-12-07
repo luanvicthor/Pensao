@@ -32,7 +32,7 @@ export class ProdutoService {
   }
 
   gelAll() {
-    return this.firedb.collection<Produto>("produtos").snapshotChanges()
+    return this.firedb.collection<Produto>("produtos", ref => ref.where('ativo', '==', true)).snapshotChanges()
       .pipe(
         map(dados =>
           dados.map(d => ({ key: d.payload.doc.id, ...d.payload.doc.data() }))
