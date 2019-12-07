@@ -13,6 +13,11 @@ export class PefilProdutoPage implements OnInit {
   private produto: Produto = new Produto
   private id: string;
 
+  slideOpts = {
+    initialSlide: 1,
+    slidesPerView: 4,
+    speed: 400
+  }
 
   constructor(
     private produtoService: ProdutoService,

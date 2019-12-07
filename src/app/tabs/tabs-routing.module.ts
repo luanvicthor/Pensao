@@ -28,6 +28,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'addProduto/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/add-produto/add-produto.module').then(m => m.AddProdutoPageModule)
+          }
+        ]
+      },
+      {
         path: 'perfilProduto/:id',
         children: [
           {

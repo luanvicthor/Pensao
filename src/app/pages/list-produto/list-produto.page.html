@@ -14,9 +14,9 @@
   <ion-list *ngIf="!lista">
     <div *ngFor="let p of produtos">
       <ion-card class="cards" routerLink="/tabs/perfilProduto/{{p.key}}">
-       <img src="{{p.fotos[0]}}" alt="" *ngIf="p.fotos" />
+        <img src="{{p.fotos[0]}}" alt="" *ngIf="p.fotos" />
         <img src="assets/box.png" alt="" *ngIf="!p.fotos" />
-        
+
         <ion-card-header>
           <ion-card-subtitle>{{p.nome}}</ion-card-subtitle>
           <ion-card-title>{{ p.valor | currency:'BRL' }}</ion-card-title>
@@ -31,7 +31,7 @@
   <ion-list class="lista" *ngIf="lista">
     <ion-item-sliding *ngFor="let p of produtos">
       <ion-item-options side="start">
-        <ion-item-option (click)="atualizar(p.key)" color="primary">Atualizar</ion-item-option>
+        <ion-item-option routerLink="/tabs/addProduto/{{p.key}}" color="primary">Atualizar</ion-item-option>
       </ion-item-options>
 
       <ion-item routerLink="/tabs/perfilProduto/{{p.key}}">

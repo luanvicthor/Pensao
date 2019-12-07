@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { MensagemService } from 'src/app/services/mensagem.service';
 import { Produto } from 'src/app/model/produto';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -29,13 +29,14 @@ import {
 export class AddProdutoPage implements OnInit {
 
   protected produto: Produto = new Produto;
+  private id: string;
 
   slideOpts = {
     initialSlide: 1,
     slidesPerView: 4,
     speed: 400
   }
-  
+
   constructor(
     private produtoService: ProdutoService,
     private msg: MensagemService,
@@ -43,34 +44,63 @@ export class AddProdutoPage implements OnInit {
     private camera: Camera,
     public actionSheetController: ActionSheetController,
     private geolocation: Geolocation,
-    private platform: Platform
+    private platform: Platform,
+    private ativeRouter: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.platform.ready().then(() => {
       this.loadMap();
     });
-    this.produto.fotos = null
+  }
+  ionViewWillEnter() {
+    this.id = this.ativeRouter.snapshot.paramMap.get("id")
+    if (this.id) {
+      this.produto = new Produto
+      this.produtoService.get(this.id).subscribe(
+        res => {
+          this.produto = res
+        }
+      )
+    }
   }
 
   onSubmit(form) {
     //console.log(this.produto);
     this.msg.presentLoading()
-    this.produtoService.add(this.produto).then(
-      res => {
-        //console.log("Cadastrado! ", res);
-        this.msg.dismissLoading()
-        this.msg.presentAlert("OK, ok!", "Cadastrado com sucesso!");
-        this.produto = new Produto;
-        form.reset();
-        this.router.navigate(['']);
-      },
-      erro => {
-        console.log("Erro: ", erro);
-        this.msg.dismissLoading()
-        this.msg.presentAlert("Ops!", "Erro ao tentar cadastrar!\nVerique os dados ou se o e-mail já foi cadastrado!");
-      }
-    )
+    if (this.id) {
+      this.produtoService.update(this.produto, this.id).then(
+        res => {
+          //console.log("Atualizado! ", res);
+          this.msg.dismissLoading()
+          this.msg.presentAlert("OK, ok!", "Atualizado com sucesso!");
+          this.produto = new Produto;
+          form.reset();
+          this.router.navigate(['']);
+        },
+        erro => {
+          console.log("Erro: ", erro);
+          this.msg.dismissLoading()
+          this.msg.presentAlert("Ops!", "Erro ao tentar atualizar!");
+        }
+      )
+    } else {
+      this.produtoService.add(this.produto).then(
+        res => {
+          //console.log("Cadastrado! ", res);
+          this.msg.dismissLoading()
+          this.msg.presentAlert("OK, ok!", "Cadastrado com sucesso!");
+          this.produto = new Produto;
+          form.reset();
+          this.router.navigate(['']);
+        },
+        erro => {
+          console.log("Erro: ", erro);
+          this.msg.dismissLoading()
+          this.msg.presentAlert("Ops!", "Erro ao tentar cadastrar!");
+        }
+      )
+    }
   }
 
   //Fotos ------------------------------------------  
