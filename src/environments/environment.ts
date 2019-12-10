@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: "AIzaSyCTkRnEBHk9Tfi3PxycDTdTgciA_nh7nxY",
-    authDomain: "ionic-modelo-cg.firebaseapp.com",
-    databaseURL: "https://ionic-modelo-cg.firebaseio.com",
-    projectId: "ionic-modelo-cg",
-    storageBucket: "ionic-modelo-cg.appspot.com",
-    messagingSenderId: "474116189141",
-    appId: "1:474116189141:web:7345ff5c02012835c22b5c",
-    measurementId: "G-ZWNGZKEP63"
+    apiKey: "AIzaSyAfZYblF0GyiBswzIwzN4YGklvPwA_ETy0",
+    authDomain: "pensao-42641.firebaseapp.com",
+    databaseURL: "https://pensao-42641.firebaseio.com",
+    projectId: "pensao-42641",
+    storageBucket: "pensao-42641.appspot.com",
+    messagingSenderId: "307753342567",
+    appId: "1:307753342567:web:79dcd6b73c5d0c50caa6c2",
+    measurementId: "G-52S76GLHJK"
   }
 };
 
